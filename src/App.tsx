@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+interface Course {
+  name: string,
+  exerciseCount: number
+}
 
-function App() {
+const Header = ({courseName}:{courseName: string}) => {
+  return <h1>{courseName}</h1>
+}
+
+const Content = ({courseParts}:{courseParts: Course[]}) => {
+  const courses = courseParts.map(c => <p key={c.name}>{c.name} {c.exerciseCount}</p>)
+  return <div>{courses}</div>
+}
+
+const Total = ({courseParts}:{courseParts: Course[]}) => {
+  return(
+    <p>
+    Number of exercises{" "}
+    {courseParts.reduce((carry, part) => carry + part.exerciseCount, 0)}
+    </p>
+  )
+}
+
+const App = () => {
+  const courseName = "Half Stack application development";
+  const courseParts = [
+    {
+      name: "Fundamentals",
+      exerciseCount: 10
+    },
+    {
+      name: "Using props to pass data",
+      exerciseCount: 7
+    },
+    {
+      name: "Deeper type usage",
+      exerciseCount: 14
+    }
+  ];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header courseName={courseName}/>
+      <Content courseParts={courseParts}/>
+      <Total courseParts={courseParts}/>
     </div>
   );
-}
+};
 
 export default App;
